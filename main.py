@@ -1,7 +1,4 @@
 
-
-
-
 def leia_int(num):
     return executar(int,num)
 
@@ -13,12 +10,11 @@ def cabecalho(txt):
     print(f'{txt}'.center(32))
     print(linha())
 
-
 def criar_sala():
     sala = []
     for fileiras in range(8):
         fileira = []
-        for assento in range(10):
+        for assentos in range(10):
             fileira.append(0)
         sala.append(fileira)
     return sala
@@ -32,9 +28,9 @@ def mostrar_sala(sala):
         for assento in fileira:
             if assento == 0:
                 fileira_visual.append('O')
-            elif assento == 1:
+            else: 
                 fileira_visual.append('X')
-
+           
         sala_visual.append(fileira_visual)
     for pos,valor in enumerate(sala_visual):
         print(letras[pos],' '.join(valor))
@@ -42,31 +38,29 @@ def mostrar_sala(sala):
 
 def executar(funcao,num):
     try:
-        valor = input(num).strip().upper()
+        valor = input(num).strip()
         if not valor:
             print('Não pode deixar vazio!')
             return
         return funcao(valor)
     except ValueError:
         print('o valor que o usuário digitou é inválido.')
-
-
-
-
+        
 def criar_indice():
-    nome = leia_string('Fileira: ')
+    nome = input('Fileira: ').upper()
     if not nome:
         return
-    numero = leia_int('Assento: ')
-    if numero <=0 or numero > 10:
-        print('ERRO: o indíce é invalido.')
+    numero = leia_int('Assento:')
+    if numero is None:
         return
+    if numero <=0 or numero > 10:
+        print('ERRO: número fora de intervalo.')
+        return
+    
     indice_fileira = ord(nome) - ord('A')
     if indice_fileira >7:
         print('ERRO: número totalmente fora de intervalo!')
         return
-    
-
     indice_assento = numero -1
     return indice_fileira,indice_assento
 
@@ -81,18 +75,19 @@ def fazer_reserva(sala):
         else:
             print('Não é possivel fazer a reserva')
             return
-    return
 
 def cancelar_reserva(sala):
     cabecalho('CANCELAR RESERVA')
     resultado = criar_indice()
     if resultado:
         indice_fileira,indice_assento = resultado
-    if sala[indice_fileira][indice_assento] == 1:
+        if sala[indice_fileira][indice_assento] == 1:
             sala[indice_fileira][indice_assento] =0
             print('Reserva cancelada com sucesso!')
-    else:
-        print('não é possivel cancelar essa reserva.')
+        else:
+            print('não é possivel cancelar essa reserva.')
+            return 
+        
 def mostrar_estatisticas(sala):
     dados = {'total':0,
              'livres':0,
@@ -113,14 +108,6 @@ def mostrar_estatisticas(sala):
         print(f"lugares ocupados: {dados['ocupados']}")
 
 
-
-    
-def leia_int(num):
-    return executar(int,num)
-def leia_string(msg):
-    return executar(str,msg)
-
-
 def main():
     cabecalho('cinema py')
     sala = criar_sala()
@@ -134,9 +121,13 @@ def main():
             mostrar_sala(sala)
         elif opc == 4:
             mostrar_estatisticas(sala)
+        elif opc == 5:
+            cabecalho('Saindo do sistema . . ..')
+            break
+        else:
+            print('Opção inválida.')
 
-             
-        
+
 main()
 
 
