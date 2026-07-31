@@ -22,13 +22,25 @@ def mostrar_sala(sala):
         sala_visual.append(fileira_visual)
     for pos,valor in enumerate(sala_visual):
         print(letras[pos],' '.join(valor))
-        
+
+
+def executar(funcao,num):
+    try:
+        valor = input(num).strip()
+        if not valor:
+            return
+        return funcao(valor)
+    except ValueError:
+        print('o valor que o usuário digitou é inválido.')
+
+def leia_int(num):
+    return executar(int,num)
 
 
 def main():
     sala = criar_sala()
     while True:
-        opc = int(input('Escolha uma opção: '))
+        opc = leia_int('Digite um número: ')
         if opc ==1:
             mostrar_sala(sala)
 
