@@ -10,7 +10,7 @@ def cabecalho(txt):
     print(f'{txt}'.center(32))
     print(linha())
 
-def criar_sala():
+def criar_sala() -> list:
     sala = []
     for fileiras in range(8):
         fileira = []
@@ -46,7 +46,7 @@ def executar(funcao,num):
     except ValueError:
         print('o valor que o usuário digitou é inválido.')
         
-def criar_indice():
+def criar_indice() -> tuple:
     nome = input('Fileira: ').upper()
     if not nome:
         return
@@ -58,7 +58,7 @@ def criar_indice():
         return
     
     indice_fileira = ord(nome) - ord('A')
-    if indice_fileira >7:
+    if indice_fileira >7 or indice_fileira <=0:
         print('ERRO: número totalmente fora de intervalo!')
         return
     indice_assento = numero -1
@@ -70,11 +70,14 @@ def fazer_reserva(sala):
     if resultado:
         indice_fileira,indice_assento = resultado
         if sala[indice_fileira][indice_assento] == 0:
+
             sala[indice_fileira][indice_assento] =1
             print('Reservado com sucesso!')
         else:
             print('Não é possivel fazer a reserva')
             return
+    else:
+        print('Tente novamente!')
 
 def cancelar_reserva(sala):
     cabecalho('CANCELAR RESERVA')
@@ -89,6 +92,7 @@ def cancelar_reserva(sala):
             return 
         
 def mostrar_estatisticas(sala):
+    cabecalho('MOSTRAR ESTATISTICAS')
     dados = {'total':0,
              'livres':0,
              'ocupados':0,}
@@ -98,8 +102,9 @@ def mostrar_estatisticas(sala):
             dados['total'] +=1
             if assento == 0:
                 dados['livres'] +=1
-            elif assento == 1:
+            else:
                 dados['ocupados'] +=1
+
     if dados['total'] >0:
         percentual = (dados['ocupados']/dados['total'])*100
         print(f"Percentual de ocupação: {percentual:.2f}%")
