@@ -46,7 +46,7 @@ def executar(funcao,num):
     except ValueError:
         print('o valor que o usuário digitou é inválido.')
         
-def criar_indice() -> tuple:
+def criar_indice():
     nome = input('Fileira: ').upper()
     if not nome:
         return
@@ -70,14 +70,12 @@ def fazer_reserva(sala):
     if resultado:
         indice_fileira,indice_assento = resultado
         if sala[indice_fileira][indice_assento] == 0:
-
             sala[indice_fileira][indice_assento] =1
             print('Reservado com sucesso!')
         else:
             print('Não é possivel fazer a reserva')
             return
-    else:
-        print('Tente novamente!')
+
 
 def cancelar_reserva(sala):
     cabecalho('CANCELAR RESERVA')
